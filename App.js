@@ -24,17 +24,22 @@ export default function App() {
         return null;
     }
 
+    const handleOnClick = () => {
+        setIsVisible(isVisible ? false : true);
+    };
+
     const Modal = () => {
         return (
-            <View style={styles.modal}>
-                <Text>4242.</Text>
+            <View style={styles.modalGroup}>
+                <View style={styles.modalBg}></View>
+                <View style={styles.modalWhite}></View>
             </View>
         );
     };
 
     return (
         <View style={styles.container} onLayout={onLayoutRootView}>
-            <Text style={[{ fontFamily: "PopinsRegular" }, styles.btn]}>
+            <Text style={[{ fontFamily: "PopinsRegular" }, styles.btn]} >
                 Click here to see the modal.
             </Text>
             {isVisible ? <Modal /> : null}
@@ -50,8 +55,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "flex-end",
         fontFamily: "PopinsRegular",
-        paddingVertical: 50,
-        paddingHorizontal: 20,
     },
     btn: {
         backgroundColor: "#1a191a",
@@ -60,14 +63,31 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         color: "#ccc",
     },
-    modal: {
+    modalGroup: {
+        flex: 0,
+        alignItems: "center",
+        justifyContent: "center",
+        width: "100%",
+        height: "100%",
+        position: "absolute",
+    },
+    modalBg: {
+        width: "100%",
+        backgroundColor: "#1a191a",
+        height: "100%",
+        borderRadius: 8,
+        width: "100%",
+        height: "100%",
+        opacity: 0.1,
+    },
+    modalWhite: {
         width: "100%",
         backgroundColor: "#ccc",
         height: "100%",
         position: "absolute",
         borderRadius: 8,
         width: 250,
-        height: 300,
-        top: "40%",
+        height: 400,
+        zIndex: 1,
     },
 });
