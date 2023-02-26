@@ -1,13 +1,14 @@
-import { StatusBar } from "expo-status-bar";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import * as Font from "expo-font";
 import { useCallback, useState } from "react";
 import * as SplashScreen from "expo-splash-screen";
+import { SafeAreaView } from "react-native-safe-area-context";
+import Modal from "./components/modal";
 
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
-    const [isVisible, setIsVisible] = useState(true);
+    const [isVisible, setIsVisible] = useState(false);
     const [fontsLoaded] = Font.useFonts({
         PopinsBlack: require("./assets/fonts/poppins/Poppins-Black.ttf"),
         PopinsRegular: require("./assets/fonts/poppins/Poppins-Regular.ttf"),
@@ -24,26 +25,23 @@ export default function App() {
         return null;
     }
 
-    const handleOnClick = () => {
+    const handleOnPress = () => {
         setIsVisible(isVisible ? false : true);
     };
 
-    const Modal = () => {
-        return (
-            <View style={styles.modalGroup}>
-                <View style={styles.modalBg}></View>
-                <View style={styles.modalWhite}></View>
-            </View>
-        );
-    };
-
     return (
-        <View style={styles.container} onLayout={onLayoutRootView}>
-            <Text style={[{ fontFamily: "PopinsRegular" }, styles.btn]} >
+        <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
+            <Text
+                style={[
+                    { fontFamily: "PopinsRegular", marginBottom: 20 },
+                    styles.btn,
+                ]}
+                onPress={(e) => handleOnPress()}
+            >
                 Click here to see the modal.
             </Text>
-            {isVisible ? <Modal /> : null}
-        </View>
+            {isVisible ? <Modal setIsVisible={setIsVisible} /> : null}
+        </SafeAreaView>
     );
 }
 
@@ -57,37 +55,12 @@ const styles = StyleSheet.create({
         fontFamily: "PopinsRegular",
     },
     btn: {
+        fontSize: 16,
         backgroundColor: "#1a191a",
-        paddingHorizontal: 14,
-        paddingVertical: 9,
+        paddingHorizontal: 18,
+        paddingVertical: 10,
         borderRadius: 4,
         color: "#ccc",
-    },
-    modalGroup: {
-        flex: 0,
-        alignItems: "center",
-        justifyContent: "center",
-        width: "100%",
-        height: "100%",
-        position: "absolute",
-    },
-    modalBg: {
-        width: "100%",
-        backgroundColor: "#1a191a",
-        height: "100%",
-        borderRadius: 8,
-        width: "100%",
-        height: "100%",
-        opacity: 0.1,
-    },
-    modalWhite: {
-        width: "100%",
-        backgroundColor: "#ccc",
-        height: "100%",
-        position: "absolute",
-        borderRadius: 8,
-        width: 250,
-        height: 400,
-        zIndex: 1,
+        zIndex: 22,
     },
 });
